@@ -38,14 +38,25 @@ module It52Rails
 
     # Use a real queuing backend for Active Job (and separate queues per environment)
     config.active_job.queue_adapter = :sidekiq
+    config.active_job.default_queue_name = :default # Имя очереди по умолчанию
     config.active_job.queue_name_prefix = "it52.#{Rails.env}"
     config.active_job.queue_name_delimiter = '.'
+    config.active_job.logger = ActiveSupport::Logger.new(STDOUT) # Кастомный логгер
+    config.active_job.retry_jitter = 0.15 # Джиттер для экспоненциального отката
 
     # Mailing host
-    config.action_mailer.default_url_options = { host: ENV.fetch('mailing_host') { 'it52.info' } }
-    config.action_mailer.default_options = { from: "robot@#{ENV.fetch('mailing_host') { 'it52.info' }}" }
-    config.action_mailer.smtp_settings = {}
-    config.action_mailer.delivery_method = :letter_opener
+    config.action_mailer.default_url_options = { host: 'localhost:3000'}
+    config.action_mailer.default_options = { from: "salnovevgen@#{ENV.fetch('mailing_host') { 'yandex.ru' }}" }
+    config.action_mailer.perform_deliveries = true # Включить отправку писем 
+    config.action_mailer.raise_delivery_errors = true # Вызывать исключения при ошибках доставки
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      tls: true,
+      address: 'smtp.yandex.ru',
+      port: 465,
+      user_name: 'salnovevgen@yandex.ru',
+      password:  'gebzdyibgdfucynu',
+      enable_starttls_auto: true  }
 
     # Middleware
     config.middleware.insert_after ActionDispatch::Static, Rack::Deflater

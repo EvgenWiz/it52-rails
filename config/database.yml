@@ -2,16 +2,16 @@ default: &default
   adapter: postgresql
   encoding: unicode
   username: postgres
-  password: postgres
+  password: 123
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  host: postgres
+  host: localhost
   timeout: 5000
 
 development:
   adapter: postgresql
   encoding: unicode
   username: postgres
-  password: postgres
+  password: 123
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   host: localhost
   timeout: 5000
@@ -21,9 +21,9 @@ test:
   adapter: postgresql
   encoding: unicode
   username: postgres
-  password: postgres
+  password: 123
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  host: postgres
+  host: localhost
   timeout: 5000
   database: it52_rails_test
 
